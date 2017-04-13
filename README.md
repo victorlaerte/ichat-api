@@ -22,14 +22,15 @@ public class PollingController {
 			public void run() {
 				while(true) {
 					try {
-                        /* Retrieves and removes the head of this queue, waiting if necessary until an element becomes available.
+                        			/* Retrieves and removes the head of this queue, waiting if necessary
+						until an element becomes available.
                         
-                        If we want some timeout we can use 
-                        Message message = messages.pool(timeout, unitTime) */
+			                        If we want some timeout we can use 
+        	        		        Message message = messages.pool(timeout, unitTime) */
 						Message message = messages.take();
 
-                        /* When message is received it send to clients who are in the
-                        thread safe Queue clients waiting for some message. */
+                			        /* When message is received it send to clients who are in the
+			                        thread safe Queue clients waiting for some message. */
 						sendToClients(message);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -49,7 +50,7 @@ public class PollingController {
 	@RequestMapping(method=RequestMethod.GET)
 	public DeferredResult<Message> ouvirMensagem()  {
 		
-        /* Setup of client timeout and callback */
+		/* Setup of client timeout and callback */
 		long timeout = 20 * 1000L;
 		final DeferredResult<Message> client = new DeferredResult<>(timeout);
 		
